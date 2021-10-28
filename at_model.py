@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 
 '''
-Res-U net with soft attension gate
+Res-U net with soft attention gate
 
 '''
 
@@ -38,7 +38,7 @@ class DoubleConv(nn.Module):
 
 
 
-class Attension_gate(nn.Module):
+class Attention_gate(nn.Module):
     def __init__(self,F_g,F_x,F_int):
         super(Attension_gate,self).__init__()
 
@@ -127,8 +127,8 @@ class UNet_Generator(nn.Module):
 			if x.shape != skip_connection.shape:
 				x = TF.resize(x,size=skip_connection.shape[2:])  #resize ,[2:] get the current shape
 
-			self.attension_gate = Attension_gate(g.shape[1],x.shape[1],x.shape[1])
-			skip_with_attension = self.attension_gate(g,skip_connection)
+			self.attention_gate = Attention_gate(g.shape[1],x.shape[1],x.shape[1])
+			skip_with_attension = self.attention_gate(g,skip_connection)
 
 
 			concat_skip  = torch.cat((skip_connection,x),dim=1)
@@ -188,7 +188,7 @@ class Discriminator(nn.Module):
 
 if __name__=='__main__':
 
-    model = Attension_gate(F_g=64,F_x=128,F_int=128)
+    model = Attention_gate(F_g=64,F_x=128,F_int=128)
     g = torch.rand((1,64,64,64))
     x = torch.rand((1,128,128,128))
     out = model(g,x)
