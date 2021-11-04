@@ -1,6 +1,6 @@
 ## Generator Architecture
 
-- ```n_levels```: Depth of generator, default is 5 layer deep.
+- ```n_levels```: Depth of generator.
 - ```latent_dim```: Deepest layer output channels
 
 
