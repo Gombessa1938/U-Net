@@ -1,0 +1,24 @@
+## Generator Architecture
+
+- ```n_levels```: Depth of generator, default is 5 layer deep.
+- ```latent_dim```: Deepest layer output channels
+
+
+The Generator architecture is a U-net variatent model. Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input.
+
+
+## Discriminator Architecture
+
+The Discriminator Architecture uses a similar structure in the first part of the generator, each layer is composed with a double convolution and the output channel is doubled. After 4 layers, two linear layers are connected, output shape is a 1 by 1 tensor representing the probability of the image is real or fake. 
+
+
+## Loss function
+
+- ```L1 loss```: The L1 difference between the network output and target image.
+- ```BCE with logits Loss```: Default GAN loss.
+- ```TV loss```: The total variation loss. 
+- ```SSIM loss```: The structural similarity index measure.
+- ```GMSD loss```: The Gradient Magnitude Similarity Deviation.
+
+
+```L1 loss``` and  ```BCE with logits Loss``` are being used on default where the other three are optional loss can be turned on by setting the loss weight in  ```model_configs.json```.
