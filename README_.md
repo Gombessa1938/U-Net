@@ -3,10 +3,14 @@
 -```in_channels```:number of input channel.
 -```out_channels```:number of output channel.
 - ```n_levels```: Depth of generator.
-- ```latent_dim```: Deepest layer output channels
+- ```n_channels```: same as```Latent_dim``` in ```config.json```file,Deepest layer output channels
 
 
-The Generator architecture is a U-net variatent model[U-net](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input.
+The Generator architecture is a U-net variatent model[link](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input. 
+
+From the bottom layer going up, we first up sample the input , three options are avaliable,```upconv```,```upsample```,```pixelshuffle```. Default option is ```upsample```. After upsampling the input, we do concatenation with the skip connection layers first before feeding into the up part of our network.
+
+Last convolution is to transform U-net's output channels into our ```out_channels```.
 
 
 ## Discriminator Architecture
