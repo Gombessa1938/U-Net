@@ -1,7 +1,7 @@
 ## Generator Architecture
 
--```in_channels```:number of input channel.<br>
--```out_channels```:number of output channel.
+- ```in_channels```:number of input channel.
+- ```out_channels```:number of output channel.
 - ```n_levels```: Depth of generator.
 - ```padding```: Choice of padding the input,default set to False 
 - ```batch_norm```: Choice of using batch normalization,default set to False
@@ -13,7 +13,7 @@ The Generator architecture is a U-net variatent model [link](https://arxiv.org/p
 
 From the bottom layer going up, we first up sample the input , three options are avaliable,```upconv```,```upsample```,```pixelshuffle```. Default option is ```upsample```. After upsampling the input, we do concatenation with the skip connection layers first before feeding into the up part of our network.
 
-Last convolution is to transform U-net's output channels into our ```out_channels```.
+The last convolution is to transform U-net's output channels into our desired number of channels
 
 
 ## Discriminator Architecture
