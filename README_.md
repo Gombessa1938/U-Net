@@ -1,33 +1,23 @@
 ## Generator Architecture
 
-- ```in_channels```:number of input channel.
-- ```out_channels```:number of output channel.
+- ```in_channels```:number of input channels.
+- ```out_channels```:number of output channels.
 - ```n_levels```: Depth of generator.
-- ```padding```: Choice of padding the input,default set to False 
-- ```batch_norm```: Choice of using batch normalization,default set to False
-- ```up_mode```: Choice of choosing up sampling method. 
-- ```n_channels```: same as```Latent_dim``` in ```config.json```file,Deepest layer output channels
+- ```padding```: Padding after Conv layers, default set to False 
+- ```batch_norm```: Batch normalization, default set to False
+- ```up_mode```: Upsampling method in the U-net Up blocks. [upconv, upsample(default), pixelshuffle]
+- ```n_channels```: ```Latent_dim``` in ```config.json```file Number of embedding channels in the deepest layer.
 
 
-The Generator architecture is a U-net variatent model [link](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input. 
+The Generator architecture is a U-net variatent model modified from [link](https://arxiv.org/pdf/1505.04597.pdf).
 
-From the bottom convolution layer going up, we first up sample the input , three options are avaliable,```upconv```,```upsample```,```pixelshuffle```. Default option is ```upsample```. After upsampling the input, we do concatenation with the skip connection layers first before feeding into the up convolution part of our network.
+Each level of the U-net downsampling path is composed of convolutional blocks with residual connections. Each block is composed of two convolutional layers. After each block, the feature channel is doubled. After each block, a residual connection is in place with the block input. 
 
-The last convolution is to transform U-net's output channels into our desired number of channels
+Each block in the upsampling path is similiar to that in the downsampling path. From the bottom convolution layer going up, the input feature map is first upsampled Three options are avaliable:```upconv```,```upsample```,```pixelshuffle```. The default option is ```upsample```. After upsampling the input, it is concatenated with the skip connection layer output from the sysmetric downsampling block and fed into the corresponding upsampling block.
+
+The last convolution is to transform U-net's output channels into desired number of channels and match the label images.
 
 
 ## Discriminator Architecture
 
 The Discriminator Architecture uses a similar structure in the first part of the generator, each layer is composed with a double convolution and the output channel is doubled. After 4 layers, two linear layers are connected, output shape is a 1 by 1 tensor representing the probability of the image is real or fake. 
-
-
-## Loss function
-
-- ```L1 loss```: The L1 difference between the network output and target image.
-- ```BCE with logits Loss```: Default GAN loss.
-- ```TV loss```: The total variation loss. 
-- ```SSIM loss```: The structural similarity index measure.
-- ```GMSD loss```: The Gradient Magnitude Similarity Deviation.
-
-
-```L1 loss``` and  ```BCE with logits Loss``` are being used on default where the other three are optional loss can be turned on by setting the loss weight in  ```model_configs.json```.
