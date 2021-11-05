@@ -11,7 +11,7 @@
 
 The Generator architecture is a U-net variatent model [link](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input. 
 
-From the bottom convolution layer going up, we first up sample the input , three options are avaliable,```upconv```,```upsample```,```pixelshuffle```. Default option is ```upsample```. After upsampling the input, we do concatenation with the skip connection layers first before feeding into the up part of our network.
+From the bottom convolution layer going up, we first up sample the input , three options are avaliable,```upconv```,```upsample```,```pixelshuffle```. Default option is ```upsample```. After upsampling the input, we do concatenation with the skip connection layers first before feeding into the up convolution part of our network.
 
 The last convolution is to transform U-net's output channels into our desired number of channels
 
