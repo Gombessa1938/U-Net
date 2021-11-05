@@ -1,10 +1,12 @@
 ## Generator Architecture
 
+-```in_channels```:number of input channel.
+-```out_channels```:number of output channel.
 - ```n_levels```: Depth of generator.
 - ```latent_dim```: Deepest layer output channels
 
 
-The Generator architecture is a U-net variatent model. Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input.
+The Generator architecture is a U-net variatent model[U-net](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input.
 
 
 ## Discriminator Architecture
