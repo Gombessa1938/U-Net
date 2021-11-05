@@ -1,12 +1,15 @@
 ## Generator Architecture
 
--```in_channels```:number of input channel.
+-```in_channels```:number of input channel.<br>
 -```out_channels```:number of output channel.
 - ```n_levels```: Depth of generator.
+- ```padding```: Choice of padding the input,default set to False 
+- ```batch_norm```: Choice of using batch normalization,default set to False
+- ```up_mode```: Choice of choosing up sampling method. 
 - ```n_channels```: same as```Latent_dim``` in ```config.json```file,Deepest layer output channels
 
 
-The Generator architecture is a U-net variatent model[link](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input. 
+The Generator architecture is a U-net variatent model [link](https://arxiv.org/pdf/1505.04597.pdf). Each layer of the U-net is composed of a double convolution, after each layer, the feature channel is doubled. After each layer, a residual connection is in place with the layer input. 
 
 From the bottom layer going up, we first up sample the input , three options are avaliable,```upconv```,```upsample```,```pixelshuffle```. Default option is ```upsample```. After upsampling the input, we do concatenation with the skip connection layers first before feeding into the up part of our network.
 
