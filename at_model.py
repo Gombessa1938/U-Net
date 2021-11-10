@@ -131,8 +131,9 @@ class Generator(nn.Module):
 			if x.shape != skip_connection.shape:
 				x = TF.resize(x,size=skip_connection.shape[2:])  #resize ,[2:] get the current shape
 			
-
-			attention = self.attension_gate[idx](g,skip_connection)
+			#important: Torch.jit can not convert nn.Modulelist[indexing], for production 
+			#indexing Modulelist can not be used. 
+			attention = self.attension_gate[idx](g,skip_connection)  
 
 
 			concat_skip  = torch.cat((attention,x),dim=1)
