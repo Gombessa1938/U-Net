@@ -57,7 +57,7 @@ class UNet(nn.Module):
 		x = self.bottleneck(x)
 
 		skip_connections = skip_connections[::-1] #reverse the list
-
+		#skip_connections = skip_connections.reverse()
 
 		for idx in range(0,len(self.ups),2):
 			x = self.ups[idx](x)
